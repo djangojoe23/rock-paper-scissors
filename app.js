@@ -1,5 +1,6 @@
 const choiceButtons = document.querySelectorAll(".rps-button");
 const resultObject = document.querySelector("#results");
+const scoreObject = document.querySelector("#score");
 
 choiceButtons.forEach(button => {
     button.addEventListener('click', playerChooses);
@@ -10,8 +11,6 @@ function playerChooses(event) {
     console.log(`Player chose: ${playerMove}`);
     playRound(playerMove);
 }
-
-
 
 function getComputerChoice(){
     let randomNumber = Math.ceil(3*Math.random());
@@ -50,7 +49,17 @@ function playRound(humanChoice){
         computerScore++;
     }
 
-    // console.log(`You chose ${humanChoice}. The computer chose ${computerChoice}. ${resultMessage}`);
     resultObject.innerText = `You chose ${humanChoice}. The computer chose ${computerChoice}. ${resultMessage}`;
+    scoreObject.innerText = `You have ${humanScore} points and the computer has ${computerScore}.`;
+    if (humanScore === 5){
+        scoreObject.innerText += "\n\nYou were the first to reach 5 points! You win!";
+        humanScore = 0;
+        computerScore = 0;
+    }
+    else if(computerScore === 5){
+        scoreObject.innerText += "\n\nThe computer was the first to reach 5 points! You lose!";
+        humanScore = 0;
+        computerScore = 0;
+    }
 }
 
